@@ -24,6 +24,7 @@ function rightPaneSetFromJSON(obj){
 
         let user_conversation_profile_img = document.createElement('img')
         user_conversation_profile_img.classList.add('conversation_user_profile_photo')
+        user_conversation_profile_img.id = "userIdImg_"+conv.user.UserId
         user_conversation_profile_img.src = `http://localhost:8080/StudentMessWebsiteV1_war_exploded/img/userProfileImage/${conv.user.UserId}.jpg`
 
         let right_conversation_container_right = document.createElement('div')
@@ -49,6 +50,9 @@ function rightPaneSetFromJSON(obj){
     })
     currentWriterColor()
     setErrorImage()
+    setActiveUsers()
+    setInterval( setActiveUsers
+    , 60 * 1000);
 }
 
 function currentWriterColor(){
@@ -70,4 +74,25 @@ function setErrorImage(){
             e.src = 'http://localhost:8080/StudentMessWebsiteV1_war_exploded/img/basic_avatar_man.png'
         })
     })
+}
+
+xhttpActiveForUser = new XMLHttpRequest();
+xhttpActiveForUser.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        let activeFriends = JSON.parse(this.responseText)
+        document.querySelectorAll(".conversation_user_profile_photo").forEach(element=>{
+            element.style.border = "none"
+        })
+        activeFriends.forEach(user=>{
+            if(document.getElementById("userIdImg_"+user)!=null){
+                document.getElementById("userIdImg_"+user).style.border = "3px solid green"
+            }
+        })
+
+    }
+};
+
+function setActiveUsers(){
+    xhttpActiveForUser.open("POST", "http://localhost:8080/StudentMessWebsiteV1_war_exploded/activeUsers", true);
+    xhttpActiveForUser.send();
 }

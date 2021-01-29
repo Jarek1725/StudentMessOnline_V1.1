@@ -30,6 +30,7 @@ public class GetFriendList {
 
             preparedStatement = conn.prepareStatement("SELECT contact_id FROM `user_contact` WHERE user_id = (?)");
             preparedStatement.setString(1, userId);
+            rs = preparedStatement.executeQuery();
             while (rs.next()){
                 friendList.add(rs.getString("contact_id"));
             }

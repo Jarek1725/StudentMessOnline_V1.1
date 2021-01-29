@@ -27,34 +27,12 @@ public class activeUsers extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<String> activeUsers = ChatServerClass.getActiveUsers();
-
-        HttpSession session=request.getSession(false);
-        User userLogged = (User) session.getAttribute("UserLogged");
-
-        List<String> userFriends = GetFriendList.getFriendList(userLogged.getUserId());
-
-        userFriends.retainAll(activeUsers);
-
-        String userStringJson = this.gson.toJson(userFriends);
-
-        PrintWriter out = response.getWriter();
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        out.print(userStringJson);
-        out.flush();
-    }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<String> activeUsers = ChatServerClass.getActiveUsers();
         List<String> activeUsersId = new ArrayList<>();
         for (String activeUser : activeUsers) {
             Claims test = decodeJWT(activeUser);
             String userId = (String) test.get("userId");
             activeUsersId.add(userId);
-            System.out.println(userId);
         }
-
-        System.out.println(activeUsers);
 
         HttpSession session=request.getSession(false);
         User userLogged = (User) session.getAttribute("UserLogged");
@@ -72,12 +50,41 @@ public class activeUsers extends HttpServlet {
         out.flush();
     }
 
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//        List<String> activeUsers = ChatServerClass.getActiveUsers();
+//        List<String> activeUsersId = new ArrayList<>();
+//        for (String activeUser : activeUsers) {
+//            Claims test = decodeJWT(activeUser);
+//            String userId = (String) test.get("userId");
+//            activeUsersId.add(userId);
+//            System.out.println(userId);
+//        }
+//
+//        HttpSession session=request.getSession(false);
+//        User userLogged = (User) session.getAttribute("UserLogged");
+//
+//        List<String> userFriends = GetFriendList.getFriendList(userLogged.getUserId());
+//
+//        for (String userFriend : userFriends) {
+//            System.out.println("Friend: "+userFriend);
+//        }
+//
+//        userFriends.retainAll(activeUsersId);
+//
+//        String userStringJson = this.gson.toJson(userFriends);
+//
+//        PrintWriter out = response.getWriter();
+//        response.setContentType("application/json");
+//        response.setCharacterEncoding("UTF-8");
+//        out.print(userStringJson);
+//        out.flush();
+    }
+
 
     public static Claims decodeJWT(String jwt) {
-        Claims claims = Jwts.parser()
+        return Jwts.parser()
                 .setSigningKey(DatatypeConverter.parseBase64Binary(SECRET_KEY))
                 .parseClaimsJws(jwt).getBody();
-        return claims;
     }
 }
 
