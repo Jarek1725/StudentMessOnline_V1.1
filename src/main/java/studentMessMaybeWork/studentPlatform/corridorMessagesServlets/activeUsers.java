@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import javax.xml.bind.DatatypeConverter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/activeUsers")
@@ -45,13 +46,12 @@ public class activeUsers extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<String> activeUsers = ChatServerClass.getActiveUsers();
-
+        List<String> activeUsersId = new ArrayList<>();
         for (String activeUser : activeUsers) {
             Claims test = decodeJWT(activeUser);
-//            System.out.println(test);
-            String test1 = (String) test.get("userId");
-            activeUsers.add(test1);
-            activeUsers.remove(activeUser);
+            String userId = (String) test.get("userId");
+            activeUsersId.add(userId);
+            System.out.println(userId);
         }
 
         System.out.println(activeUsers);
@@ -61,7 +61,7 @@ public class activeUsers extends HttpServlet {
 
         List<String> userFriends = GetFriendList.getFriendList(userLogged.getUserId());
 
-        userFriends.retainAll(activeUsers);
+        userFriends.retainAll(activeUsersId);
 
         String userStringJson = this.gson.toJson(userFriends);
 
