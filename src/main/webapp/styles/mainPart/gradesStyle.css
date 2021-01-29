@@ -1,0 +1,23 @@
+#grades_container{
+    padding-right: 50px;
+    padding-top: 125px;
+    height: 80%;
+    width: 95%;
+}
+#grades_panels{
+    background-color: #ffffff;
+    padding: 30px;
+}
+
+.grade_panel{
+    display: flex;
+    padding: 22px;
+    border-bottom: 1px solid #c4c4c4;
+}
+
+.grade_panel_left{
+    width: 30%;
+}
+.grade_panel_right{
+    display: flex;
+}

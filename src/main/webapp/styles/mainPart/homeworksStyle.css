@@ -1,0 +1,24 @@
+#homeworks_container{
+    padding-right: 50px;
+    padding-top: 125px;
+    background: white;
+    width: 95%;
+}
+
+#homeworks_container h3{
+    font-size: 19px;
+    font-weight: 400;
+    margin-bottom: 25px;
+}
+
+#homeworks_container p{
+    padding: 5px 18px;
+}
+
+.homework_day > .homework_day_border_none{
+    border-bottom: 1px solid #b5b5b5;
+}
+
+.homework_day > .homework_day_border_none:last-of-type{
+    border-bottom: none;
+}

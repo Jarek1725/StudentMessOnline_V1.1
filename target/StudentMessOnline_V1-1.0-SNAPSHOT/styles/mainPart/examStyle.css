@@ -1,0 +1,35 @@
+#exam_container{
+    padding-right: 50px;
+    padding-top: 125px;
+    height: 80%;
+}
+
+h1{
+    margin-top: 33px;
+    font-weight: 400;
+    position: absolute;
+}
+
+.exam_panel{
+    width: 98%;
+    background-color: #ffffff;
+    border-radius: 0px;
+    margin-bottom: 40px;
+    border: 1px solid #d9d9d9;
+    -webkit-box-shadow: 0px 0px 17px 5px rgba(144,144,144,0.44);
+    box-shadow: 0px 0px 17px 5px rgba(144,144,144,0.44);
+}
+
+#exam_container h3{
+    border: none;
+    background: rgb(237,237,237);
+    padding: 20px;
+    font-size: 24px;
+    font-weight: 300;
+    margin: 0 0 34px;
+}
+
+#exam_container p{
+    margin-left: 20px;
+    margin-bottom: 30px;
+}

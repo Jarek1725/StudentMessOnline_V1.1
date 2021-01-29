@@ -1,0 +1,44 @@
+#lesson_container{
+    padding-top: 125px;
+    width: 95%;
+    display: flex;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #dedede;
+}
+
+.lesson_panel{
+    text-align: center;
+    height: 80px;
+    border: 1px solid #dedede;
+    line-height: 21px;
+    border-bottom: none;
+    border-right: none;
+}
+
+.lesson_panel_teacher_name{
+    font-size: 12px;
+    font-weight: 300;
+}
+.lesson_panel_subject_name{
+    font-weight: 500;
+}
+
+.lesson_panel_table_top p{
+    margin-top: 29px;
+}
+
+.hours p{
+    margin-top: 29px;
+}
+
+.days{
+    width: 20%;
+
+}
+#lesson_empty_bottom{
+    height: 50px;
+}
+
+#day_5 .lesson_panel{
+    border-right: 1px solid #dedede;
+}

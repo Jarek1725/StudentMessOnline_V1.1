@@ -1,0 +1,66 @@
+body{
+    background-image: url('/img/double-bubble-outline.png');
+}
+
+#user_top_description{
+    text-align: center;
+    font-size: 32px;
+}
+
+#user_top_description h3{
+    font-weight: 300;
+    margin-bottom: 15px;
+}
+
+#user_profile_images_container{
+    width: 250px;
+    height: 250px;
+    margin: 50px auto 0;
+    overflow: hidden;
+    border-radius: 50%;
+    border: 5px solid #fcfcfc;
+    -webkit-box-shadow: 0px 0px 34px -9px #000000;
+    box-shadow: 0px 0px 34px -9px #000000;
+}
+
+#user_profile_photo_profile{
+    height: 250px;
+    width: 250px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#user_bottom{
+    display: flex;
+    width: 90%;
+    margin: auto;
+    justify-content: space-between;
+}
+
+#user_details_left{
+    width: 30%;
+    padding: 75px 0 0 0;
+    height: 300px;
+    text-align: center;
+    -webkit-box-shadow: 0px 0px 22px -8px #000000;
+    box-shadow: 0px 0px 22px -10px rgba(0,0,0,0.3);
+}
+
+#user_details_main{
+    width: 68%;
+    -webkit-box-shadow: 0px 0px 22px -8px #000000;
+    box-shadow: 0px 0px 22px -10px rgba(0,0,0,0.3);
+}
+
+#send_friend_request{
+    background: rgb(24,45,221);
+    background: linear-gradient(50deg, rgba(24,45,221,1) 0%, rgba(125,0,144,1) 100%);
+    background-size: 100%;
+    color: white;
+    padding: 7px 12px;
+    border: none;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
