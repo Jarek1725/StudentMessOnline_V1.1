@@ -31,7 +31,6 @@ body{
     width: 65%;
     overflow: auto;
     position: fixed;
-    overflow-y: scroll;
     left:15%;
     height:100vh;
 }
@@ -95,5 +94,20 @@ body{
 #search_panel{
     text-align: center;
     margin-bottom: 80px;
+}
 
+#old_message_container{
+    overflow: auto;
+    overflow-y: scroll;
+    height: 95%;
+}
+
+.send_message_input{
+    display: block;
+    width: 90% !important;
+    margin: auto;
+    padding: 7px;
+    border: 1px solid rgb(125,0,144) !important;
+    outline: none;
+    border-radius: 16px;
 }

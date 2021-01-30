@@ -19,6 +19,7 @@ function rightPaneSetFromJSON(obj){
         let conversationDiv = document.createElement("div")
         conversationDiv.classList.add('right_conversation_container')
         conversationDiv.classList.add(conv.user.UserId)
+        conversationDiv.id = 'right_conversation_container_'+conv.user.UserId
 
         let right_conversation_container_user = document.createElement('div')
 
@@ -63,6 +64,7 @@ function currentWriterColor(){
                 e1.style.backgroundColor = 'white'
             })
             e.style.backgroundColor = 'e9e9e9'
+            e.style.fontWeight = 'normal'
             localStorage.setItem('write_with_user_id', e.classList.value.substring(29))
         })
     })

@@ -5,6 +5,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.json.JSONObject;
 import studentMessMaybeWork.studentPlatform.messagesDatabaseHelper.messageEntities.shortMessageEntity;
+import studentMessMaybeWork.studentPlatform.messagesDatabaseHelper.messageQueries.isConversationWith;
 
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
@@ -47,20 +48,24 @@ public class ChatServerClass {
         shortMessageEntity shortMessageEntity = gson.fromJson(message, shortMessageEntity.class);
         String userToKey = "";
         shortMessageEntity.setSenderId(String.valueOf(decodeJWT(shortMessageEntity.getSenderId()).get("userId")));
-        if(sessions.containsKey(session.getId())){
-            for (Map.Entry<String , String> entry : sessions.entrySet()) {
-                if (decodeJWT(entry.getValue()).get("userId").equals(shortMessageEntity.getToWho())) {
-                    userToKey = entry.getKey();
-                    break;
+        if(isConversationWith.isConversation(shortMessageEntity.getSenderId(), shortMessageEntity.getToWho())){
+            System.out.println("JEST");
+            if(sessions.containsKey(session.getId())){
+                for (Map.Entry<String , String> entry : sessions.entrySet()) {
+                    if (decodeJWT(entry.getValue()).get("userId").equals(shortMessageEntity.getToWho())) {
+                        userToKey = entry.getKey();
+                        break;
+                    }
+                }
+                for (Session peer : session.getOpenSessions()) {
+                    if(peer.getId().equals(userToKey)){
+                        peer.getBasicRemote().sendText(gson.toJson(shortMessageEntity));
+                        break;
+                    }
                 }
             }
-            for (Session peer : session.getOpenSessions()) {
-                if(peer.getId().equals(userToKey)){
-                    System.out.println("JEST");
-                    peer.getBasicRemote().sendText(gson.toJson(shortMessageEntity));
-                    break;
-                }
-            }
+        } else{
+            System.out.println("Nie ma");
         }
     }
 

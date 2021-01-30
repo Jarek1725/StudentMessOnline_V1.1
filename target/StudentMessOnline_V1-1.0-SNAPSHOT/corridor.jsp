@@ -96,7 +96,8 @@
             <form action="addPost" method="post" enctype="multipart/form-data" id="add_post_form">
                 <div id="form_top">
                     <img src="${pageContext.request.contextPath}/img/userProfileImage/${sessionScope.UserLogged.profilePhoto}.jpg" alt="" class="user_profile_photo on_error_photo">
-<%--                     onerror="this.onerror=null; this.src='${pageContext.request.contextPath}/img/basic_avatar_man.png'"--%>
+<%--TEST--%>
+                    <%--                     onerror="this.onerror=null; this.src='${pageContext.request.contextPath}/img/basic_avatar_man.png'"--%>
                     <input type="text" placeholder="What's up?" name="post_desrciption" id="post_desrciption">
                 </div>
                 <div id="form_bottom">

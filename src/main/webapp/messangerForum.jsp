@@ -52,8 +52,10 @@
             </div>
         </div>
         <div id="main_pane">
-            <input title="Chat Input" id="input" type="text" style="display: block; width: 100%; border-width: 1px 0 1px 0;" autofocus/>
+            <div id="old_message_container">
 
+            </div>
+            <input title="Chat Input" id="input" class="send_message_input" type="text" style="display: block;" placeholder="Type a message..." autofocus/>
         </div>
         <div id="right_pane"></div>
     </div>
@@ -65,18 +67,13 @@
 <script>
     let userId = sessionStorage.getItem("UserJWTId")
     let ws = new WebSocket(`ws://localhost:8080/StudentMessWebsiteV1_war_exploded/ws/`+userId);
-    console.log(ws)
+    // console.log(ws)
     ws.onmessage = function (event) {
-        console.log(JSON.parse(event.data).senderId);
-        if(document.getElementById(JSON.parse(event.data).senderId)!=null){
-            document.getElementById(JSON.parse(event.data).senderId).style.fontWeight = '800'
+        let commMess = JSON.parse(event.data)
+        console.log("right_conversation_container_"+commMess.senderId)
+        if(document.getElementById("right_conversation_container_"+commMess.senderId)!=null){
+            document.getElementById("right_conversation_container_"+commMess.senderId).style.fontWeight = 'bold'
         }
-    }
-
-
-
-    ws.onmessage = function (event) {
-        console.log(JSON.parse(event.data));
     }
 
     document.getElementById("input").addEventListener("keyup", function (event) {
