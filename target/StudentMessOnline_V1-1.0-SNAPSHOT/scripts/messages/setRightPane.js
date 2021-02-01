@@ -56,6 +56,8 @@ function rightPaneSetFromJSON(obj){
     , 60 * 1000);
 }
 
+let old_message_container = document.getElementById("old_message_container")
+
 function currentWriterColor(){
     let all_right_pane_conversation_container = document.querySelectorAll('.right_conversation_container')
     all_right_pane_conversation_container.forEach(e=>{
@@ -63,11 +65,39 @@ function currentWriterColor(){
             all_right_pane_conversation_container.forEach(e1=>{
                 e1.style.backgroundColor = 'white'
             })
+            old_message_container.replaceChildren()
+            localStorage.setItem("last_message_position", 30);
             e.style.backgroundColor = 'e9e9e9'
             e.style.fontWeight = 'normal'
             localStorage.setItem('write_with_user_id', e.classList.value.substring(29))
+            xhttpActiveForMessages.open("POST", "http://localhost:8080/StudentMessWebsiteV1_war_exploded/getLastMessageWithConversation", true);
+            xhttpActiveForMessages.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            let params = "userId="+ localStorage.getItem("write_with_user_id")+"&message_position="+localStorage.getItem("last_message_position");
+            xhttpActiveForMessages.send(params);
+            localStorage.setItem("last_message_position", +localStorage.getItem("last_message_position")+30)
         })
     })
+}
+
+xhttpActiveForMessages = new XMLHttpRequest();
+xhttpActiveForMessages.onreadystatechange = function (){
+    if (this.readyState == 4 && this.status == 200) {
+        let lastMessages = JSON.parse(this.responseText)
+        console.log(lastMessages)
+        let message_container = null
+        let message_text = null;
+        lastMessages.forEach(message=>{
+            message_container = document.createElement('div')
+            if(message.sender_id == localStorage.getItem("write_with_user_id")){
+                message_container.classList.add('left_mess')
+            }else{
+                message_container.classList.add('right_mess')
+            }
+            message_text = document.createTextNode(escapeHtml(message.message_text))
+            message_container.appendChild(message_text)
+            old_message_container.prepend(message_container)
+        })
+    }
 }
 
 function setErrorImage(){
@@ -90,7 +120,15 @@ xhttpActiveForUser.onreadystatechange = function() {
                 document.getElementById("userIdImg_"+user).style.border = "3px solid green"
             }
         })
-
+        let isFocusOnUser = false
+        document.querySelectorAll(".right_conversation_container").forEach(e=>{
+            if(e.style.backgroundColor === 'white'){
+                isFocusOnUser = true
+            }
+        })
+        if(isFocusOnUser===false){
+            document.querySelectorAll(".right_conversation_container")[0].click()
+        }
     }
 };
 
@@ -98,3 +136,13 @@ function setActiveUsers(){
     xhttpActiveForUser.open("POST", "http://localhost:8080/StudentMessWebsiteV1_war_exploded/activeUsers", true);
     xhttpActiveForUser.send();
 }
+
+old_message_container.addEventListener('scroll', function (){
+    if(old_message_container.scrollTop === 0){
+        xhttpActiveForMessages.open("POST", "http://localhost:8080/StudentMessWebsiteV1_war_exploded/getLastMessageWithConversation", true);
+        xhttpActiveForMessages.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        let params = "userId="+ localStorage.getItem("write_with_user_id")+"&message_position="+localStorage.getItem("last_message_position");
+        xhttpActiveForMessages.send(params);
+        localStorage.setItem("last_message_position", +localStorage.getItem("last_message_position")+30)
+    }
+})

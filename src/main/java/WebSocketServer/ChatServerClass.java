@@ -45,6 +45,7 @@ public class ChatServerClass {
 
     @OnMessage
     public void handleMessage(String message, Session session) throws IOException, EncodeException {
+        System.out.println(message);
         shortMessageEntity shortMessageEntity = gson.fromJson(message, shortMessageEntity.class);
         String userToKey = "";
         shortMessageEntity.setSenderId(String.valueOf(decodeJWT(shortMessageEntity.getSenderId()).get("userId")));

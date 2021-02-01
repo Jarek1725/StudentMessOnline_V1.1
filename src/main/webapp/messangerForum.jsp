@@ -65,24 +65,57 @@
 
 
 <script>
+    let all_messages_container = document.getElementById("old_message_container")
     let userId = sessionStorage.getItem("UserJWTId")
     let ws = new WebSocket(`ws://localhost:8080/StudentMessWebsiteV1_war_exploded/ws/`+userId);
-    // console.log(ws)
+
+    let right_mess = null
+    let left_mess = null
+
     ws.onmessage = function (event) {
         let commMess = JSON.parse(event.data)
-        console.log("right_conversation_container_"+commMess.senderId)
+        console.log(commMess)
         if(document.getElementById("right_conversation_container_"+commMess.senderId)!=null){
             document.getElementById("right_conversation_container_"+commMess.senderId).style.fontWeight = 'bold'
+        }
+        if(commMess.senderId === localStorage.getItem("write_with_user_id")){
+            left_mess = document.createElement('div')
+            left_mess.classList.add('left_mess')
+            left_mess.textContent = escapeHtml(commMess.messageText)
+            all_messages_container.appendChild(left_mess)
         }
     }
 
     document.getElementById("input").addEventListener("keyup", function (event) {
         if (event.keyCode === 13) {
             let msg = event.target.value
-            let text = '{"messageText":"'+msg+'", "senderId":"'+sessionStorage.getItem("UserJWTId")+'", "toWho":"'+localStorage.getItem("write_with_user_id")+'"}'
-            ws.send(text)
+            console.log(estapeJavaString(msg))
+            let text = '{"messageText":"'+escapeHtml(msg)+'", "senderId":"'+sessionStorage.getItem("UserJWTId")+'", "toWho":"'+localStorage.getItem("write_with_user_id")+'"}'
+            ws.send((text))
+            event.target.value = ""
+            right_mess = document.createElement('div')
+            right_mess.classList.add('right_mess')
+            right_mess.textContent = msg
+            all_messages_container.appendChild(right_mess)
         }
     });
+
+    function estapeJavaString(text){
+        return text.replace(/"/g, '\\"');
+
+
+    }
+
+    function escapeHtml(unsafe) {
+        return unsafe
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;")
+            // .replace(/"/g, '\\"');
+    }
+
 </script>
 
 </body>

@@ -99,15 +99,46 @@ body{
 #old_message_container{
     overflow: auto;
     overflow-y: scroll;
-    height: 95%;
+    display: block;
+    height: 93%;
+    /*width: 96%;*/
+    margin: auto;
+}
+
+.right_mess{
+    clear: both;
+    font-size: 13px;
+    float: right;
+    margin-right: 11px;
+    background: #881c99;
+    word-wrap: break-word;
+    padding: 7px 11px;
+    border-radius: 10px;
+    color: white;
+    margin-top: 5px;
+    max-width: 600px;
+}
+
+.left_mess{
+    clear: both;
+    float: left;
+    font-size: 13px;
+    margin-left: 11px;
+    background: #192ac8;
+    word-wrap: break-word;
+    padding: 7px 11px;
+    border-radius: 10px;
+    color: white;
+    margin-top: 5px;
+    max-width: 600px;
 }
 
 .send_message_input{
     display: block;
     width: 90% !important;
-    margin: auto;
     padding: 7px;
     border: 1px solid rgb(125,0,144) !important;
     outline: none;
     border-radius: 16px;
+    margin: 8px auto auto;
 }
