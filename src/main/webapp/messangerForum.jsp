@@ -76,6 +76,8 @@
         let commMess = JSON.parse(event.data)
         console.log(commMess)
         if(document.getElementById("right_conversation_container_"+commMess.senderId)!=null){
+            senderConvContainerOnTop(commMess.senderId)
+            document.getElementById('last_message_from_'+commMess.senderId).textContent = commMess.messageText
             document.getElementById("right_conversation_container_"+commMess.senderId).style.fontWeight = 'bold'
         }
         if(commMess.senderId === localStorage.getItem("write_with_user_id")){
@@ -83,6 +85,7 @@
             left_mess.classList.add('left_mess')
             left_mess.textContent = escapeHtml(commMess.messageText)
             all_messages_container.appendChild(left_mess)
+            document.getElementById("old_message_container").scrollTop = document.getElementById("old_message_container").scrollHeight
         }
     }
 
@@ -92,6 +95,12 @@
             console.log(estapeJavaString(msg))
             let text = '{"messageText":"'+escapeHtml(msg)+'", "senderId":"'+sessionStorage.getItem("UserJWTId")+'", "toWho":"'+localStorage.getItem("write_with_user_id")+'"}'
             ws.send((text))
+
+            xhttpActiveForMessages.open("POST", "http://localhost:8080/StudentMessWebsiteV1_war_exploded/addMsgToDatabaseServlet", true);
+            xhttpActiveForMessages.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            let params = "userId="+ estapeJavaString(localStorage.getItem("write_with_user_id"))+"&message="+estapeJavaString(msg);
+            xhttpActiveForMessages.send(params);
+
             event.target.value = ""
             right_mess = document.createElement('div')
             right_mess.classList.add('right_mess')
@@ -102,8 +111,6 @@
 
     function estapeJavaString(text){
         return text.replace(/"/g, '\\"');
-
-
     }
 
     function escapeHtml(unsafe) {
@@ -115,6 +122,11 @@
             .replace(/'/g, "&#039;")
             // .replace(/"/g, '\\"');
     }
+
+
+    xhttpAddMsg = new XMLHttpRequest();
+
+
 
 </script>
 

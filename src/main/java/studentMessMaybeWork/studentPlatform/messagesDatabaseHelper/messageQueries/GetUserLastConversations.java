@@ -25,11 +25,12 @@ public class GetUserLastConversations {
 
         try{
             conn = DatabaseConnectionHelper.getConnection();
-            preparedStatement = conn.prepareStatement("SELECT DISTINCT par.conversation_id, par.users_id, us.* FROM participants as par \n" +
+            preparedStatement = conn.prepareStatement("SELECT DISTINCT par.conversation_id, par.users_id, us.*,ms.created_at FROM participants as par \n" +
                     "INNER JOIN user as us ON us.user_id = par.users_id \n" +
                     "INNER JOIN messages as ms ON ms.conversation_id = par.conversation_id \n" +
                     "WHERE par.conversation_id IN (SELECT conversation_id FROM `participants` WHERE participants.users_id = (?)) AND par.users_id != (?)\n" +
-                    "ORDER BY ms.created_at");
+                    "ORDER BY ms.created_at DESC");
+//            preparedStatement = conn.prepareStatement("SELECT ms.sender_id FROM participants AS ptc INNER JOIN messages AS ms ON ms.conversation_id = ptc.conversation_id WHERE users_id = 3 ORDER BY ms.created_at DESC")
             preparedStatement.setString(1, currentUserId);
             preparedStatement.setString(2, currentUserId);
 
@@ -40,9 +41,18 @@ public class GetUserLastConversations {
 
             userToReturn user = null;
 
+            List<String> isInList = new ArrayList<>();
+
             while(rs.next()){
-                String convId = rs.getString("conversation_id");
+
                 String userId = rs.getString("user_id");
+                if(isInList.contains(userId)){
+                    continue;
+                } else{
+                    isInList.add(userId);
+                }
+
+                String convId = rs.getString("conversation_id");
                 String classId = rs.getString("class_id");
                 UserClass userClass = GetUserClass.getUserClass(classId);
                 String phoneNumber = rs.getString("phone");

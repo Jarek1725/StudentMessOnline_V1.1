@@ -31,4 +31,28 @@ public class isConversationWith {
         }
         return false;
     }
+
+    public static String getConvNumber(String userId, String secondUserId){
+        Connection conn = null;
+        PreparedStatement preparedStatement = null;
+
+        try{
+            conn = DatabaseConnectionHelper.getConnection();
+            preparedStatement = conn.prepareStatement("SELECT * FROM `participants` WHERE conversation_id IN(SELECT conversation_id FROM participants WHERE users_id = (?)) and users_id = (?)");
+            preparedStatement.setString(1, userId);
+            preparedStatement.setString(2, secondUserId);
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while(rs.next()){
+                return rs.getString("conversation_id");
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            DatabaseConnectionHelper.close(conn);
+        }
+        return null;
+    }
 }
