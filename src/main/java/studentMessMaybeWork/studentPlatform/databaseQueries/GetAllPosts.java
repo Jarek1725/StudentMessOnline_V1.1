@@ -47,9 +47,9 @@ public class GetAllPosts {
                 allPostsList.add(new Post(postId, creatorId, postDescription, photoPath, forWho, createdAt_string, deletedAt_string, postCreatorName, userProfilePhoto, postLikes, userLikePostList, commentList));
 
                 System.out.println("HGALO");
-                for (String s : userLikePostList) {
-                    System.out.println(s);
-                }
+//                for (String s : userLikePostList) {
+//                    System.out.println(s);
+//                }
 
             }
         } catch (ClassNotFoundException e) {

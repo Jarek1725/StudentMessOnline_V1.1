@@ -62,9 +62,7 @@
     <div id="left_side">
 
         <div id="search_panel">
-            <form>
-                <input type="text" placeholder="Search">
-            </form>
+            <input type="text" id="search_input" placeholder="Search">
         </div>
         <div class="left_button">
             <a href="http://localhost:8080/StudentMessWebsiteV1_war_exploded/userPage.jsp?name=${sessionScope.UserLogged.userId}">Profile</a>
@@ -88,7 +86,7 @@
             <a href="#">Your groups</a>
         </div>
         <div class="left_button">
-            <a href="#">Create group</a>
+            <a href="#">Friends requests</a>
         </div>
     </div>
     <div id="main">
@@ -248,6 +246,7 @@
 <script src="scripts/corridor/corridorMainGetPosts.js"></script>
 <script src="scripts/corridor/corridorGetNewPosts.js"></script>
 <script src="scripts/corridor/blockPostsForNobody.js"></script>
+<script src="scripts/searchPane.js"></script>
 <%--<script src="scripts/corridorMaxDescriptionLength.js"></script>--%>
 <%--<script src="scripts/all_post_give_id.js"></script>--%>
 <%--<script src="scripts/showPostComments.js"></script>--%>

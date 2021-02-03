@@ -136,8 +136,12 @@ function currentWriterColor(){
             isFocusOnUser = true
         }
     })
-    if(isFocusOnUser===false){
-        document.querySelectorAll(".right_conversation_container")[0].click()
+    if(localStorage.getItem("write_with_user_id")!=null){
+        document.getElementById("right_conversation_container_"+localStorage.getItem("write_with_user_id")).click()
+    }else{
+        if(isFocusOnUser===false){
+            document.querySelectorAll(".right_conversation_container")[0].click()
+        }
     }
 }
 
